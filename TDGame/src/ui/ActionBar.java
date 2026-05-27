@@ -23,7 +23,7 @@ extends Bar {
     private MyButton sellTower;
     private MyButton upgradeTower;
     private DecimalFormat formatter;
-    private int coins = 200;
+    private int coins = 2000; //TODO set back to 200
     private boolean showTowerCost;
     private int towerCostType;
     private int cost;

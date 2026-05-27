@@ -17,221 +17,228 @@ import towers.Projectile;
 import towers.Tower;
 
 public class ProjectileManager {
-    private Playing playing;
-    private ArrayList<Projectile> projectiles = new ArrayList();
-    private ArrayList<Explosion> explosions = new ArrayList();
-    private BufferedImage[] projImgs;
-    private int projId = 0;
-    private BufferedImage[] explosionImgs;
+	private Playing playing;
+	private ArrayList<Projectile> projectiles = new ArrayList();
+	private ArrayList<Explosion> explosions = new ArrayList();
+	private BufferedImage[] projImgs;
+	private int projId = 0;
+	private BufferedImage[] explosionImgs;
 
-    public ProjectileManager(Playing playing) {
-        this.playing = playing;
-        this.importImgs();
-    }
+	public ProjectileManager(Playing playing) {
+		this.playing = playing;
+		this.importImgs();
+	}
 
-    private void importImgs() {
-        BufferedImage atlas = LoadSave.getSpriteAtlas();
-        this.projImgs = new BufferedImage[3];
-        int i = 0;
-        while (i < 3) {
-            this.projImgs[i] = atlas.getSubimage((7 + i) * 32, 32, 32, 32);
-            ++i;
-        }
-        this.imporeExplosionImgs(atlas);
-    }
+	private void importImgs() {
+		BufferedImage atlas = LoadSave.getSpriteAtlas();
+		this.projImgs = new BufferedImage[4];
+		int i = 0;
+		while (i < 3) {
+			this.projImgs[i] = atlas.getSubimage((7 + i) * 32, 32, 32, 32);
+			++i;
+		}
+		projImgs[3] = atlas.getSubimage(5 * 32, 3 * 32, 32, 32);
+		this.imporeExplosionImgs(atlas);
+	}
 
-    private void imporeExplosionImgs(BufferedImage atlas) {
-        this.explosionImgs = new BufferedImage[7];
-        int i = 0;
-        while (i < 7) {
-            this.explosionImgs[i] = atlas.getSubimage(i * 32, 64, 32, 32);
-            ++i;
-        }
-    }
+	private void imporeExplosionImgs(BufferedImage atlas) {
+		this.explosionImgs = new BufferedImage[7];
+		int i = 0;
+		while (i < 7) {
+			this.explosionImgs[i] = atlas.getSubimage(i * 32, 64, 32, 32);
+			++i;
+		}
+	}
 
-    public void newProjectile(Tower t, Enemy e) {
-        int type = this.getProjType(t);
-        int xDist = (int)(t.getX() - e.getX());
-        int yDist = (int)(t.getY() - e.getY());
-        int totalDist = Math.abs(xDist) + Math.abs(yDist);
-        float xPer = (float)Math.abs(xDist) / (float)totalDist;
-        float xSpeed = xPer * Constants.Projectiles.GetSpeed(type);
-        float ySpeed = Constants.Projectiles.GetSpeed(type) - xSpeed;
-        if (t.getX() > e.getX()) {
-            xSpeed *= -1.0f;
-        }
-        if (t.getY() > e.getY()) {
-            ySpeed *= -1.0f;
-        }
-        float rotate = 0.0f;
-        if (type == 0) {
-            float arcValue = (float)Math.atan((float)yDist / (float)xDist);
-            rotate = (float)Math.toDegrees(arcValue);
-            if (xDist < 0) {
-                rotate += 180.0f;
-            }
-        }
-        for (Projectile p : this.projectiles) {
-            if (p.isActive() || p.getProjectileType() != type) {
+	public void newProjectile(Tower t, Enemy e) {
+		int type = this.getProjType(t);
+		int xDist = (int) (t.getX() - e.getX());
+		int yDist = (int) (t.getY() - e.getY());
+		int totalDist = Math.abs(xDist) + Math.abs(yDist);
+		float xPer = (float) Math.abs(xDist) / (float) totalDist;
+		float xSpeed = xPer * Constants.Projectiles.GetSpeed(type);
+		float ySpeed = Constants.Projectiles.GetSpeed(type) - xSpeed;
+		if (t.getX() > e.getX()) {
+			xSpeed *= -1.0f;
+		}
+		if (t.getY() > e.getY()) {
+			ySpeed *= -1.0f;
+		}
+		float rotate = 0.0f;
+		if (type == 0) {
+			float arcValue = (float) Math.atan((float) yDist / (float) xDist);
+			rotate = (float) Math.toDegrees(arcValue);
+			if (xDist < 0) {
+				rotate += 180.0f;
+			}
+		}
+		for (Projectile p : this.projectiles) {
+			if (p.isActive() || p.getProjectileType() != type) {
 				continue;
 			}
-            p.reuse(t.getX() + 16, t.getY() + 16, xSpeed, ySpeed, rotate, t.getDmg());
-            return;
-        }
-        this.projectiles.add(new Projectile(t.getX() + 16, t.getY() + 16, xSpeed, ySpeed, rotate, this.projId++, type, t.getDmg()));
-    }
-    
+			p.reuse(t.getX() + 16, t.getY() + 16, xSpeed, ySpeed, rotate, t.getDmg());
+			return;
+		}
+		this.projectiles.add(
+				new Projectile(t.getX() + 16, t.getY() + 16, xSpeed, ySpeed, rotate, this.projId++, type, t.getDmg()));
+	}
+
 	public void newProjectile(Tower t) {
 		int type = this.getProjType(t);
 		int xSpeed = 10;
 		int ySpeed = 0;
 		int rotate = 0;
 		for (Projectile p : this.projectiles) {
-            if (p.isActive() || p.getProjectileType() != type) {
+			if (p.isActive() || p.getProjectileType() != type) {
 				continue;
 			}
-            p.reuse(t.getX() + 16, t.getY() + 16, xSpeed, ySpeed, rotate, t.getDmg());
-            return;
-        }
-        this.projectiles.add(new Projectile(t.getX() + 16, t.getY() + 16, xSpeed, ySpeed, rotate, this.projId++, type, t.getDmg()));
+			p.reuse(t.getX() + 16, t.getY() + 16, xSpeed, ySpeed, rotate, t.getDmg());
+			return;
+		}
+		this.projectiles.add(
+				new Projectile(t.getX() + 16, t.getY() + 16, xSpeed, ySpeed, rotate, this.projId++, type, t.getDmg()));
 	}
 
-    public void update() {
-        for (Projectile p : this.projectiles) {
-            if (!p.isActive()) {
+	public void update() {
+		for (Projectile p : this.projectiles) {
+			if (!p.isActive()) {
 				continue;
 			}
-            p.move();
-            if (this.isProjHittingEnemy(p)) {
-                p.setActive(false);
-                if (p.getProjectileType() != 2) {
+			p.move();
+			if (this.isProjHittingEnemy(p)) {
+				p.setActive(false);
+				if (p.getProjectileType() != 2) {
 					continue;
 				}
-                this.explosions.add(new Explosion(p.getPos()));
-                this.explodeOnEnemies(p);
-                continue;
-            }
-            if (!this.isProjectilOutOfBounds(p)) {
+				this.explosions.add(new Explosion(p.getPos()));
+				this.explodeOnEnemies(p);
 				continue;
 			}
-            p.setActive(false);
-        }
-        for (Explosion e : this.explosions) {
-            if (e.getExlpoIndex() >= 7) {
+			if (!this.isProjectilOutOfBounds(p)) {
 				continue;
 			}
-            e.update();
-        }
-    }
-
-    private void explodeOnEnemies(Projectile p) {
-        for (Enemy e : this.playing.getEnemyManager().getEnemies()) {
-            float yDist;
-            if (!e.isAlive()) {
+			p.setActive(false);
+		}
+		for (Explosion e : this.explosions) {
+			if (e.getExlpoIndex() >= 7) {
 				continue;
 			}
-            float radius = 40.0f;
-            float xDist = Math.abs(p.getPos().x - e.getX());
-            float realDist = (float)Math.hypot(xDist, yDist = Math.abs(p.getPos().y - e.getY()));
-            if (!(realDist <= radius)) {
+			e.update();
+		}
+	}
+
+	private void explodeOnEnemies(Projectile p) {
+		for (Enemy e : this.playing.getEnemyManager().getEnemies()) {
+			float yDist;
+			if (!e.isAlive()) {
 				continue;
 			}
-            e.hurt(p.getDamage());
-        }
-    }
-
-    private boolean isProjHittingEnemy(Projectile p) {
-        for (Enemy e : this.playing.getEnemyManager().getEnemies()) {
-            if (!e.isAlive() || !e.getBounds().contains(p.getPos())) {
+			float radius = 40.0f;
+			float xDist = Math.abs(p.getPos().x - e.getX());
+			float realDist = (float) Math.hypot(xDist, yDist = Math.abs(p.getPos().y - e.getY()));
+			if (!(realDist <= radius)) {
 				continue;
 			}
-            e.hurt(p.getDamage());
-            if (p.getProjectileType() == 1 && e.getEnemyType() != 1) {
-                e.slow();
-            }
-            return true;
-        }
-        return false;
-    }
+			e.hurt(p.getDamage());
+		}
+	}
 
-    private boolean isProjectilOutOfBounds(Projectile p) {
-        return !(p.getPos().x >= 0.0f) || !(p.getPos().x <= 640.0f) || !(p.getPos().y >= 0.0f) || !(p.getPos().y <= 800.0f);
-    }
-
-    public void draw(Graphics g) {
-        Graphics2D g2d = (Graphics2D)g;
-        for (Projectile p : this.projectiles) {
-            if (!p.isActive()) {
+	private boolean isProjHittingEnemy(Projectile p) {
+		for (Enemy e : this.playing.getEnemyManager().getEnemies()) {
+			if (!e.isAlive() || !e.getBounds().contains(p.getPos())) {
 				continue;
 			}
-            if (p.getProjectileType() == 0) {
-                g2d.translate(p.getPos().x, p.getPos().y);
-                g2d.rotate(Math.toRadians(p.getRotation()));
-                g2d.drawImage(this.projImgs[p.getProjectileType()], -16, -16, null);
-                g2d.rotate(Math.toRadians(-p.getRotation()));
-                g2d.translate(-p.getPos().x, -p.getPos().y);
-                continue;
-            }
-            g2d.drawImage(this.projImgs[p.getProjectileType()], (int)p.getPos().x - 16, (int)p.getPos().y - 16, null);
-        }
-        this.drawExplosions(g2d);
-    }
+			e.hurt(p.getDamage());
+			if (p.getProjectileType() == 1 && e.getEnemyType() != 1) {
+				e.slow();
+			}
+			return true;
+		}
+		return false;
+	}
 
-    private void drawExplosions(Graphics2D g2d) {
-        for (Explosion e : this.explosions) {
-            if (e.getExlpoIndex() >= 7) {
+	private boolean isProjectilOutOfBounds(Projectile p) {
+		return !(p.getPos().x >= 0.0f) || !(p.getPos().x <= 640.0f) || !(p.getPos().y >= 0.0f)
+				|| !(p.getPos().y <= 800.0f);
+	}
+
+	public void draw(Graphics g) {
+		Graphics2D g2d = (Graphics2D) g;
+		for (Projectile p : this.projectiles) {
+			if (!p.isActive()) {
 				continue;
 			}
-            g2d.drawImage(this.explosionImgs[e.getExlpoIndex()], (int)e.getPos().x - 16, (int)e.getPos().y - 16, null);
-        }
-    }
+			if (p.getProjectileType() == 0) {
+				g2d.translate(p.getPos().x, p.getPos().y);
+				g2d.rotate(Math.toRadians(p.getRotation()));
+				g2d.drawImage(this.projImgs[p.getProjectileType()], -16, -16, null);
+				g2d.rotate(Math.toRadians(-p.getRotation()));
+				g2d.translate(-p.getPos().x, -p.getPos().y);
+				continue;
+			}
+			g2d.drawImage(this.projImgs[p.getProjectileType()], (int) p.getPos().x - 16, (int) p.getPos().y - 16, null);
+		}
+		this.drawExplosions(g2d);
+	}
 
-    private int getProjType(Tower t) {
-        switch (t.getTowerType()) {
-            case 0: {
-                return 2;
-            }
-            case 1: {
-                return 0;
-            }
-            case 2: {
-                return 1;
-            }
-        }
-        return 0;
-    }
+	private void drawExplosions(Graphics2D g2d) {
+		for (Explosion e : this.explosions) {
+			if (e.getExlpoIndex() >= 7) {
+				continue;
+			}
+			g2d.drawImage(this.explosionImgs[e.getExlpoIndex()], (int) e.getPos().x - 16, (int) e.getPos().y - 16,
+					null);
+		}
+	}
 
-    public void reset() {
-        this.projectiles.clear();
-        this.explosions.clear();
-        this.projId = 0;
-    }
+	private int getProjType(Tower t) {
+		switch (t.getTowerType()) {
+		case 0: {
+			return 2;
+		}
+		case 1: {
+			return 0;
+		}
+		case 2: {
+			return 1;
+		}
+		case 3: {
+			return 3;
+		}
+		}
+		return 0;
+	}
 
-    public class Explosion {
-        private Point2D.Float pos;
-        private int exploTick = 0;
-        private int exploIndex = 0;
+	public void reset() {
+		this.projectiles.clear();
+		this.explosions.clear();
+		this.projId = 0;
+	}
 
-        public Explosion(Point2D.Float pos) {
-            this.pos = pos;
-        }
+	public class Explosion {
+		private Point2D.Float pos;
+		private int exploTick = 0;
+		private int exploIndex = 0;
 
-        public void update() {
-            ++this.exploTick;
-            if (this.exploTick >= 12) {
-                this.exploTick = 0;
-                ++this.exploIndex;
-            }
-        }
+		public Explosion(Point2D.Float pos) {
+			this.pos = pos;
+		}
 
-        public int getExlpoIndex() {
-            return this.exploIndex;
-        }
+		public void update() {
+			++this.exploTick;
+			if (this.exploTick >= 12) {
+				this.exploTick = 0;
+				++this.exploIndex;
+			}
+		}
 
-        public Point2D.Float getPos() {
-            return this.pos;
-        }
-    }
-    
+		public int getExlpoIndex() {
+			return this.exploIndex;
+		}
+
+		public Point2D.Float getPos() {
+			return this.pos;
+		}
+	}
+
 }
-
