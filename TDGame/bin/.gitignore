@@ -1,10 +1,4 @@
-/enemies/
-/events/
-/helpz/
-/inputs/
-/managers/
-/module-info.class
-/objects/
-/scenes/
-/towers/
-/ui/
+/Game.class
+/GameScreen.class
+/GameStates.class
+/Render.class
