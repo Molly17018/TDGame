@@ -170,7 +170,7 @@ public class Constants {
                     return 50.0f;
                 }
                 case 3: {
-                	return 500.0f;
+                	return 10.0f;
                 }
             }
             return 0.0f;
@@ -188,7 +188,7 @@ public class Constants {
                     return 42.5f;
                 }
                 case 3: {
-                	return 50.0f;
+                	return 500.0f;
                 }
             }
             return 0.0f;
