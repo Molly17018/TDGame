@@ -54,7 +54,7 @@ public class Tower {
     }
 
     public boolean isCooldownOver() {
-        return (float)this.cdTick >= this.cooldown;
+        return this.cdTick >= this.cooldown;
     }
 
     public void resteCooldown() {

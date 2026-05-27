@@ -5,7 +5,6 @@ package ui;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import ui.MyButton;
 
 public class Bar {
     protected int x;

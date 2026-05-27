@@ -3,9 +3,10 @@
  */
 package managers;
 
-import events.Wave;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import events.Wave;
 import scenes.Playing;
 
 public class WaveManager {
@@ -53,16 +54,16 @@ public class WaveManager {
     }
 
     private void createWaves() {
-        this.waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0))));
-        this.waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 1))));
-        this.waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0, 1, 1, 1, 1, 3))));
-        this.waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(3, 3, 3, 3, 3, 3, 3, 3, 3, 3))));
-        this.waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 1, 1, 2))));
-        this.waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(1, 1, 1, 0, 0, 0, 0, 0, 0, 0))));
-        this.waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(1, 1, 1, 3, 3, 0, 0, 0, 0, 0))));
-        this.waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(1, 1, 1, 3, 3, 3, 3, 0, 0, 0))));
-        this.waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(3, 3, 3, 1, 1, 3, 3, 3, 0, 0))));
-        this.waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(3, 3, 3, 3, 3, 3, 1, 1, 2, 2))));
+        this.waves.add(new Wave(new ArrayList<>(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0))));
+        this.waves.add(new Wave(new ArrayList<>(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 1))));
+        this.waves.add(new Wave(new ArrayList<>(Arrays.asList(0, 0, 0, 0, 0, 1, 1, 1, 1, 3))));
+        this.waves.add(new Wave(new ArrayList<>(Arrays.asList(3, 3, 3, 3, 3, 3, 3, 3, 3, 3))));
+        this.waves.add(new Wave(new ArrayList<>(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 1, 1, 2))));
+        this.waves.add(new Wave(new ArrayList<>(Arrays.asList(1, 1, 1, 0, 0, 0, 0, 0, 0, 0))));
+        this.waves.add(new Wave(new ArrayList<>(Arrays.asList(1, 1, 1, 3, 3, 0, 0, 0, 0, 0))));
+        this.waves.add(new Wave(new ArrayList<>(Arrays.asList(1, 1, 1, 3, 3, 3, 3, 0, 0, 0))));
+        this.waves.add(new Wave(new ArrayList<>(Arrays.asList(3, 3, 3, 1, 1, 3, 3, 3, 0, 0))));
+        this.waves.add(new Wave(new ArrayList<>(Arrays.asList(3, 3, 3, 3, 3, 3, 1, 1, 2, 2))));
     }
 
     public void resetEnemyIndex() {

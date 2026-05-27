@@ -3,16 +3,15 @@
  */
 package scenes;
 
-import helpz.LoadSave;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+
+import helpz.LoadSave;
 import main.Game;
 import objects.PathPoint;
 import objects.Tile;
-import scenes.GameScene;
-import scenes.SceneMethods;
 import ui.ToolBar;
 
 public class Editing

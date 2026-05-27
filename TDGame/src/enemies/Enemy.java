@@ -3,8 +3,9 @@
  */
 package enemies;
 
-import helpz.Constants;
 import java.awt.Rectangle;
+
+import helpz.Constants;
 import managers.EnemyManager;
 
 public abstract class Enemy {

@@ -3,7 +3,6 @@
  */
 package enemies;
 
-import enemies.Enemy;
 import managers.EnemyManager;
 
 public class Bat

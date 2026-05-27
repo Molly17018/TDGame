@@ -3,12 +3,13 @@
  */
 package managers;
 
-import enemies.Enemy;
-import helpz.LoadSave;
-import helpz.Utilz;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+
+import enemies.Enemy;
+import helpz.LoadSave;
+import helpz.Utilz;
 import scenes.Playing;
 import towers.Tower;
 
@@ -49,7 +50,9 @@ public class TowerManager {
 
     public void upgradeTower(Tower displayedTower) {
         for (Tower t : this.towers) {
-            if (t.getId() != displayedTower.getId()) continue;
+            if (t.getId() != displayedTower.getId()) {
+				continue;
+			}
             this.playing.getActionBar().removeUpgradeCost();
             t.upgradeTower();
         }
@@ -64,7 +67,9 @@ public class TowerManager {
 
     private void attackEnemyIfClose(Tower t) {
         for (Enemy e : this.playing.getEnemyManager().getEnemies()) {
-            if (!e.isAlive() || !this.isEnemyInRange(t, e) || !t.isCooldownOver()) continue;
+            if (!e.isAlive() || !this.isEnemyInRange(t, e) || !t.isCooldownOver()) {
+				continue;
+			}
             this.playing.shootEnemy(t, e);
             t.resteCooldown();
         }
@@ -72,7 +77,7 @@ public class TowerManager {
 
     private boolean isEnemyInRange(Tower t, Enemy e) {
         int range = Utilz.GetHypoDistance(t.getX(), t.getY(), e.getX(), e.getY());
-        return (float)range < t.getRange();
+        return range < t.getRange();
     }
 
     public void draw(Graphics g) {
@@ -83,7 +88,9 @@ public class TowerManager {
 
     public Tower getTowerAt(int x, int y) {
         for (Tower t : this.towers) {
-            if (t.getX() != x || t.getY() != y) continue;
+            if (t.getX() != x || t.getY() != y) {
+				continue;
+			}
             return t;
         }
         return null;

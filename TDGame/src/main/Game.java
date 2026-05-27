@@ -3,11 +3,9 @@
  */
 package main;
 
-import helpz.LoadSave;
 import javax.swing.JFrame;
-import main.GameScreen;
-import main.GameStates;
-import main.Render;
+
+import helpz.LoadSave;
 import managers.TileManager;
 import scenes.Editing;
 import scenes.GameOver;
@@ -67,7 +65,7 @@ implements Runnable {
     }
 
     private void start() {
-        this.gameThread = new Thread((Runnable)this){};
+        this.gameThread = new Thread(this){};
         this.gameThread.start();
     }
 
@@ -115,17 +113,19 @@ implements Runnable {
         long lastTimeCheck = System.currentTimeMillis();
         while (true) {
             long now;
-            if ((double)((now = System.nanoTime()) - lastFrame) >= timePerFrame) {
+            if ((now = System.nanoTime()) - lastFrame >= timePerFrame) {
                 this.repaint();
                 lastFrame = now;
                 ++frames;
             }
-            if ((double)(now - lastUpdate) >= timePerUpdate) {
+            if (now - lastUpdate >= timePerUpdate) {
                 this.updateGame();
                 lastUpdate = now;
                 ++updates;
             }
-            if (System.currentTimeMillis() - lastTimeCheck < 1000L) continue;
+            if (System.currentTimeMillis() - lastTimeCheck < 1000L) {
+				continue;
+			}
             System.out.println("FPS: " + frames + " | UPS: " + updates);
             frames = 0;
             updates = 0;

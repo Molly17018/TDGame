@@ -3,7 +3,6 @@
  */
 package helpz;
 
-import helpz.Utilz;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,7 +11,9 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
+
 import javax.imageio.ImageIO;
+
 import objects.PathPoint;
 
 public class LoadSave {
@@ -86,7 +87,7 @@ public class LoadSave {
     }
 
     private static ArrayList<Integer> ReadFromFile() {
-        ArrayList<Integer> list = new ArrayList<Integer>();
+        ArrayList<Integer> list = new ArrayList<>();
         try {
             Scanner sc = new Scanner(lvlFile);
             while (sc.hasNextLine()) {
@@ -103,7 +104,7 @@ public class LoadSave {
     public static ArrayList<PathPoint> GetLevelPathPoints() {
         if (lvlFile.exists()) {
             ArrayList<Integer> list = LoadSave.ReadFromFile();
-            ArrayList<PathPoint> points = new ArrayList<PathPoint>();
+            ArrayList<PathPoint> points = new ArrayList<>();
             points.add(new PathPoint(list.get(400), list.get(401)));
             points.add(new PathPoint(list.get(402), list.get(403)));
             return points;

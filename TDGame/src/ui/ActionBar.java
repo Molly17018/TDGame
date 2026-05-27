@@ -3,16 +3,15 @@
  */
 package ui;
 
-import helpz.Constants;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.text.DecimalFormat;
+
+import helpz.Constants;
 import main.GameStates;
 import scenes.Playing;
 import towers.Tower;
-import ui.Bar;
-import ui.MyButton;
 
 public class ActionBar
 extends Bar {
@@ -44,7 +43,7 @@ extends Bar {
         int h = 50;
         int xStart = 110;
         int yStart = 650;
-        int xOffset = (int)((float)w * 1.1f);
+        int xOffset = (int)(w * 1.1f);
         int i = 0;
         while (i < this.towerButtons.length) {
             this.towerButtons[i] = new MyButton("", xStart + xOffset * i, yStart, w, h, i);
@@ -198,12 +197,12 @@ extends Bar {
 
     private int getSellAmount(Tower displayedTower) {
         int upgradeCost = (displayedTower.getTier() - 1) * this.getUpgradeAmount(displayedTower);
-        upgradeCost = (int)((float)upgradeCost * 0.5f);
+        upgradeCost = (int)(upgradeCost * 0.5f);
         return Constants.Towers.GetTowerCost(displayedTower.getTowerType()) / 2 + upgradeCost;
     }
 
     private int getUpgradeAmount(Tower displayedTower) {
-        int amount = (int)((float)Constants.Towers.GetTowerCost(displayedTower.getTowerType()) * 0.5f);
+        int amount = (int)(Constants.Towers.GetTowerCost(displayedTower.getTowerType()) * 0.5f);
         return amount;
     }
 
@@ -233,7 +232,7 @@ extends Bar {
         this.playing.removeTower(this.displayedTower);
         this.coins += Constants.Towers.GetTowerCost(this.displayedTower.getTowerType()) / 2;
         int upgradeCost = (this.displayedTower.getTier() - 1) * this.getUpgradeAmount(this.displayedTower);
-        upgradeCost = (int)((float)upgradeCost * 0.5f);
+        upgradeCost = (int)(upgradeCost * 0.5f);
         this.coins += upgradeCost;
         this.displayedTower = null;
     }

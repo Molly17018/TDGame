@@ -3,12 +3,13 @@
  */
 package main;
 
-import inputs.KeyboardListener;
-import inputs.MyMouseListener;
 import java.awt.Dimension;
 import java.awt.Graphics;
+
 import javax.swing.JPanel;
-import main.Game;
+
+import inputs.KeyboardListener;
+import inputs.MyMouseListener;
 
 public class GameScreen
 extends JPanel {

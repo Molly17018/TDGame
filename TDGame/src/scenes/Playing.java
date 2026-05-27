@@ -3,21 +3,20 @@
  */
 package scenes;
 
-import enemies.Enemy;
-import helpz.Constants;
-import helpz.LoadSave;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+
+import enemies.Enemy;
+import helpz.Constants;
+import helpz.LoadSave;
 import main.Game;
 import managers.EnemyManager;
 import managers.ProjectileManager;
 import managers.TowerManager;
 import managers.WaveManager;
 import objects.PathPoint;
-import scenes.GameScene;
-import scenes.SceneMethods;
 import towers.Tower;
 import ui.ActionBar;
 
@@ -95,7 +94,9 @@ implements SceneMethods {
             return false;
         }
         for (Enemy e : this.enemyManager.getEnemies()) {
-            if (!e.isAlive()) continue;
+            if (!e.isAlive()) {
+				continue;
+			}
             return false;
         }
         return true;
@@ -161,10 +162,7 @@ implements SceneMethods {
     public int getTileType(int x, int y) {
         int xCord = x / 32;
         int yCord = y / 32;
-        if (xCord < 0 || xCord > 19) {
-            return 0;
-        }
-        if (yCord < 0 || yCord > 19) {
+        if (xCord < 0 || xCord > 19 || yCord < 0 || yCord > 19) {
             return 0;
         }
         int id = this.lvl[y / 32][x / 32];

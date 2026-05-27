@@ -5,10 +5,9 @@ package scenes;
 
 import java.awt.Color;
 import java.awt.Graphics;
+
 import main.Game;
 import main.GameStates;
-import scenes.GameScene;
-import scenes.SceneMethods;
 import ui.MyButton;
 
 public class Settings

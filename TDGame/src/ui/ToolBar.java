@@ -3,18 +3,17 @@
  */
 package ui;
 
-import helpz.LoadSave;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import helpz.LoadSave;
 import main.GameStates;
 import objects.Tile;
 import scenes.Editing;
-import ui.Bar;
-import ui.MyButton;
 
 public class ToolBar
 extends Bar {
@@ -26,7 +25,7 @@ extends Bar {
     private BufferedImage pathStart;
     private BufferedImage pathEnd;
     private Tile selectedTile;
-    private Map<MyButton, ArrayList<Tile>> map = new HashMap<MyButton, ArrayList<Tile>>();
+    private Map<MyButton, ArrayList<Tile>> map = new HashMap<>();
     private MyButton bGrass;
     private MyButton bWater;
     private MyButton bRoad;
@@ -56,7 +55,7 @@ extends Bar {
         int h = 50;
         int xStart = 110;
         int yStart = 650;
-        int xOffset = (int)((float)w * 1.1f);
+        int xOffset = (int)(w * 1.1f);
         int i = 0;
         this.bGrass = new MyButton("Grass", xStart, yStart, w, h, i++);
         this.bWater = new MyButton("Water", xStart + xOffset, yStart, w, h, i++);
@@ -154,7 +153,9 @@ extends Bar {
             this.editing.setSelectedTile(this.selectedTile);
         } else {
             for (MyButton b : this.map.keySet()) {
-                if (!b.getBounds().contains(x, y)) continue;
+                if (!b.getBounds().contains(x, y)) {
+					continue;
+				}
                 this.selectedTile = this.map.get(b).get(0);
                 this.editing.setSelectedTile(this.selectedTile);
                 this.currendButton = b;
@@ -188,7 +189,9 @@ extends Bar {
             this.bPathEnd.setMouseOver(true);
         } else {
             for (MyButton b : this.map.keySet()) {
-                if (!b.getBounds().contains(x, y)) continue;
+                if (!b.getBounds().contains(x, y)) {
+					continue;
+				}
                 b.setMouseOver(true);
                 return;
             }
@@ -210,7 +213,9 @@ extends Bar {
             this.bPathEnd.setMousePressed(true);
         } else {
             for (MyButton b : this.map.keySet()) {
-                if (!b.getBounds().contains(x, y)) continue;
+                if (!b.getBounds().contains(x, y)) {
+					continue;
+				}
                 b.setMousePressed(true);
                 return;
             }

@@ -3,6 +3,11 @@
  */
 package managers;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
 import enemies.Bat;
 import enemies.Enemy;
 import enemies.Knight;
@@ -10,10 +15,6 @@ import enemies.Orc;
 import enemies.Wolf;
 import helpz.Constants;
 import helpz.LoadSave;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import objects.PathPoint;
 import scenes.Playing;
 
@@ -50,7 +51,9 @@ public class EnemyManager {
 
     public void update() {
         for (Enemy e : this.enemies) {
-            if (!e.isAlive()) continue;
+            if (!e.isAlive()) {
+				continue;
+			}
             this.updateEnemyMove(e);
         }
     }
@@ -58,7 +61,9 @@ public class EnemyManager {
     public int getAmountOfAliveEnemies() {
         int size = 0;
         for (Enemy e : this.enemies) {
-            if (!e.isAlive()) continue;
+            if (!e.isAlive()) {
+				continue;
+			}
             ++size;
         }
         return size;
@@ -109,12 +114,16 @@ public class EnemyManager {
     private void fixEnemyOffset(Enemy e, int dir, int xCord, int yCord) {
         switch (dir) {
             case 2: {
-                if (xCord >= 19) break;
+                if (xCord >= 19) {
+					break;
+				}
                 ++xCord;
                 break;
             }
             case 3: {
-                if (yCord >= 19) break;
+                if (yCord >= 19) {
+					break;
+				}
                 ++yCord;
             }
         }
@@ -122,7 +131,7 @@ public class EnemyManager {
     }
 
     private boolean isAtEnd(Enemy e) {
-        return e.getX() == (float)(this.end.getxCord() * 32) && e.getY() == (float)(this.end.getyCord() * 32);
+        return e.getX() == this.end.getxCord() * 32 && e.getY() == this.end.getyCord() * 32;
     }
 
     private int getTileType(int x, int y) {
@@ -177,7 +186,9 @@ public class EnemyManager {
 
     public void draw(Graphics g) {
         for (Enemy e : this.enemies) {
-            if (!e.isAlive()) continue;
+            if (!e.isAlive()) {
+				continue;
+			}
             this.drawEnemy(e, g);
             this.drawHealthBar(e, g);
             this.drawEffects(e, g);
@@ -196,7 +207,7 @@ public class EnemyManager {
     }
 
     private int getNewBarWidth(Enemy e) {
-        return (int)((float)this.HPbarWidth * e.getHealthBarFloat());
+        return (int)(this.HPbarWidth * e.getHealthBarFloat());
     }
 
     private void drawEnemy(Enemy e, Graphics g) {

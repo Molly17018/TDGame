@@ -4,8 +4,6 @@
 package main;
 
 import java.awt.Graphics;
-import main.Game;
-import main.GameStates;
 
 public class Render {
     private Game game;

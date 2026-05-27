@@ -3,10 +3,11 @@
  */
 package managers;
 
-import helpz.ImgFix;
-import helpz.LoadSave;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+
+import helpz.ImgFix;
+import helpz.LoadSave;
 import objects.Tile;
 
 public class TileManager {
