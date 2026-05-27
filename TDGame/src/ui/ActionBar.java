@@ -38,7 +38,7 @@ extends Bar {
 
     private void initButtons() {
         this.bMenu = new MyButton("Menu", 2, 642, 100, 30);
-        this.towerButtons = new MyButton[3];
+        this.towerButtons = new MyButton[4];
         int w = 50;
         int h = 50;
         int xStart = 110;

@@ -42,7 +42,7 @@ implements SceneMethods {
         this.loadDefaultLevel();
         this.actionBar = new ActionBar(0, 640, 640, 160, this);
         this.enemyManager = new EnemyManager(this, this.start, this.end);
-        this.towerManager = new TowerManager(this);
+        this.towerManager = new TowerManager(this, actionBar);
         this.projectileManager = new ProjectileManager(this);
         this.waveManager = new WaveManager(this);
     }
@@ -171,6 +171,10 @@ implements SceneMethods {
 
     public void shootEnemy(Tower t, Enemy e) {
         this.projectileManager.newProjectile(t, e);
+    }
+    
+    public void drop(Tower t) {
+    	this.projectileManager.newProjectile(t);
     }
 
     @Override

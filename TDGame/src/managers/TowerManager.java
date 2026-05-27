@@ -12,26 +12,31 @@ import helpz.LoadSave;
 import helpz.Utilz;
 import scenes.Playing;
 import towers.Tower;
+import ui.ActionBar;
 
 public class TowerManager {
     private Playing playing;
+    private ActionBar actionBar;
     private BufferedImage[] towerImgs;
     private ArrayList<Tower> towers = new ArrayList();
     private int towerAmount = 0;
+    private int tickCount = 0;
 
-    public TowerManager(Playing playing) {
+    public TowerManager(Playing playing, ActionBar actionBar) {
         this.playing = playing;
+        this.actionBar = actionBar;
         this.loadTowerImgs();
     }
 
     private void loadTowerImgs() {
         BufferedImage athlas = LoadSave.getSpriteAtlas();
-        this.towerImgs = new BufferedImage[3];
+        this.towerImgs = new BufferedImage[4];
         int i = 0;
         while (i < 3) {
             this.towerImgs[i] = athlas.getSubimage((4 + i) * 32, 32, 32, 32);
             ++i;
         }
+        towerImgs[3] = athlas.getSubimage(0, 3 * 32, 32, 32);
     }
 
     public void addTower(Tower selectedTower, int xPos, int yPos) {
@@ -62,10 +67,20 @@ public class TowerManager {
         for (Tower t : this.towers) {
             t.update();
             this.attackEnemyIfClose(t);
+            if (t.getTowerType() == 3) {
+                updateTreeDrop(t);
+            }
         }
     }
 
-    private void attackEnemyIfClose(Tower t) {
+    private void updateTreeDrop(Tower t) {
+		if (t.isCooldownOver()) {
+			this.playing.drop(t);
+			actionBar.addCoins(10);
+		}
+	}
+
+	private void attackEnemyIfClose(Tower t) {
         for (Enemy e : this.playing.getEnemyManager().getEnemies()) {
             if (!e.isAlive() || !this.isEnemyInRange(t, e) || !t.isCooldownOver()) {
 				continue;
@@ -85,7 +100,7 @@ public class TowerManager {
             g.drawImage(this.towerImgs[t.getTowerType()], t.getX(), t.getY(), null);
         }
     }
-
+    
     public Tower getTowerAt(int x, int y) {
         for (Tower t : this.towers) {
             if (t.getX() != x || t.getY() != y) {

@@ -80,6 +80,21 @@ public class ProjectileManager {
         }
         this.projectiles.add(new Projectile(t.getX() + 16, t.getY() + 16, xSpeed, ySpeed, rotate, this.projId++, type, t.getDmg()));
     }
+    
+	public void newProjectile(Tower t) {
+		int type = this.getProjType(t);
+		int xSpeed = 10;
+		int ySpeed = 0;
+		int rotate = 0;
+		for (Projectile p : this.projectiles) {
+            if (p.isActive() || p.getProjectileType() != type) {
+				continue;
+			}
+            p.reuse(t.getX() + 16, t.getY() + 16, xSpeed, ySpeed, rotate, t.getDmg());
+            return;
+        }
+        this.projectiles.add(new Projectile(t.getX() + 16, t.getY() + 16, xSpeed, ySpeed, rotate, this.projId++, type, t.getDmg()));
+	}
 
     public void update() {
         for (Projectile p : this.projectiles) {
@@ -217,5 +232,6 @@ public class ProjectileManager {
             return this.pos;
         }
     }
+    
 }
 
