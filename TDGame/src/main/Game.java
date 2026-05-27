@@ -1,5 +1,8 @@
-/*
- * Decompiled with CFR 0.151.
+/**
+ * Main Class of the Project.
+ * @author Molly17018
+ * @version 0.1.0
+ * 
  */
 package main;
 
@@ -13,6 +16,9 @@ import scenes.Menu;
 import scenes.Playing;
 import scenes.Settings;
 
+/**
+ * Main class of this Game
+ */
 public class Game
 extends JFrame
 implements Runnable {
@@ -30,6 +36,9 @@ implements Runnable {
     private GameOver gameOver;
     private TileManager tileManager;
 
+    /**
+     * Constructor for the Game Class.
+     */
     public Game() {
         LoadSave.CreateFolder();
         this.createDefaultLevel();
@@ -43,16 +52,30 @@ implements Runnable {
         this.setVisible(true);
     }
 
+    /**
+     * Creates the default Level by initilizing an arry and filling it with Ones (grass tiles).
+     */
     private void createDefaultLevel() {
         int[] arr = new int[400];
         int i = 0;
         while (i < arr.length) {
-            arr[i] = 0;
+            arr[i] = 1;
             ++i;
         }
         LoadSave.CreateLevel(arr);
     }
 
+    /**
+     * Initates all Classes that are used in Game.
+     * @see managers.TileManager
+     * @see main.Render
+     * @see main.GameScreen
+     * @see scenes.Menu
+     * @see scenes.Playing
+     * @see scenes.Settings
+     * @see scenes.Editing
+     * @see scenes.GameOver
+     */
     private void initClasses() {
         this.tileManager = new TileManager();
         this.render = new Render(this);
@@ -64,11 +87,17 @@ implements Runnable {
         this.gameOver = new GameOver(this);
     }
 
+    /**
+     * Starts the Game thread, which is the thread the whole game runs in.
+     */
     private void start() {
         this.gameThread = new Thread(this){};
         this.gameThread.start();
     }
 
+    /**
+     * Debug feature, that showes the UPS in the console.
+     */
     private void callUPS() {
         if (System.currentTimeMillis() - this.lastTimeUPS >= 1000L) {
             System.out.println("UPS: " + this.updates);
@@ -77,6 +106,9 @@ implements Runnable {
         }
     }
 
+    /**
+     * Updates the Game, by calling the update() methods in the current gamestate.
+     */
     private void updateGame() {
         switch (GameStates.gameState) {
             case EDIT: {
@@ -96,6 +128,10 @@ implements Runnable {
         }
     }
 
+    /**
+     * Main method. Inizilises the Game class.
+     * @param args
+     */
     public static void main(String[] args) {
         Game game = new Game();
         game.gameScreen.initInputs();
@@ -103,6 +139,9 @@ implements Runnable {
     }
 
     @Override
+    /**
+     * Run loop of the game. This is the Game loop.
+     */
     public void run() {
         long lastFrame = System.nanoTime();
         long lastUpdate = System.nanoTime();
