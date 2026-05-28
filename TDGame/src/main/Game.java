@@ -138,10 +138,10 @@ implements Runnable {
         game.start();
     }
 
-    @Override
     /**
      * Run loop of the game. This is the Game loop.
      */
+    @Override
     public void run() {
         long lastFrame = System.nanoTime();
         long lastUpdate = System.nanoTime();
