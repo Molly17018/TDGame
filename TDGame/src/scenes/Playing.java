@@ -62,6 +62,10 @@ implements SceneMethods {
         this.end = points.get(1);
     }
 
+    /**
+     * Updates the Playing class, gets called by the class Game.
+     * @see main.Game
+     */
     public void update() {
         this.updateTick();
         this.enemyManager.update();
@@ -93,6 +97,9 @@ implements SceneMethods {
         return this.waveManager.isThereMoreWaves();
     }
 
+    /** 
+     * @return True if all the enemies in a wave are dead.
+     */
     private boolean isAllEnemiesDead() {
         if (this.waveManager.isThereMoreEnemiesInWave()) {
             return false;
@@ -118,6 +125,11 @@ implements SceneMethods {
         this.selectedTower = selectedTower;
     }
 
+    /**
+     * Calls all instentces of render important for the class Playing.
+     * @param g Graphics
+     * @see main.Render
+     */
     @Override
     public void render(Graphics g) {
         this.drawLevel(g);
@@ -134,6 +146,11 @@ implements SceneMethods {
         }
     }
 
+    /**
+     * Draws the level from the save file.
+     * @param g
+     * @see helpz.LoadSave
+     */
     private void drawLevel(Graphics g) {
         int y = 0;
         while (y < this.lvl.length) {
@@ -150,15 +167,42 @@ implements SceneMethods {
             ++y;
         }
     }
+    
+    /**
+     * Spawns the projectile needed for a tower to shoot at an enemy
+     * @param t Tower that shoots the projectile
+     * @param e Enemy that is targeted by the projectile
+     */
+    public void shootEnemy(Tower t, Enemy e) {
+        this.projectileManager.newProjectile(t, e);
+    }
+    
+    /**
+     * Spawns the Heart and Coin Projektiles for the Tree towers
+     * @param t Tower/Tree that spawns the projectile
+     */
+    public void drop(Tower t) {
+    	this.projectileManager.newProjectile(t);
+    }
 
     private boolean isAnimation(int spriteId) {
         return this.game.getTileManager().isSpriteAnimation(spriteId);
     }
 
+    /**
+     * Gets the correct image for a tile
+     * @param spriteID Type of Tile
+     * @return Tile Image
+     */
     public BufferedImage getSprite(int spriteID) {
         return this.game.getTileManager().getSprite(spriteID);
     }
 
+    /**
+     * Gets the correct image for an explosion
+     * @param spriteID Type of Tile
+     * @return Tile Image
+     */
     public BufferedImage getSprite(int spriteID, int animationIndex) {
         return this.game.getTileManager().getAniSprite(spriteID, animationIndex);
     }
@@ -171,14 +215,6 @@ implements SceneMethods {
         }
         int id = this.lvl[y / 32][x / 32];
         return this.game.getTileManager().getTile(id).getTileType();
-    }
-
-    public void shootEnemy(Tower t, Enemy e) {
-        this.projectileManager.newProjectile(t, e);
-    }
-    
-    public void drop(Tower t) {
-    	this.projectileManager.newProjectile(t);
     }
 
     @Override
