@@ -30,13 +30,14 @@ public class TowerManager {
 
     private void loadTowerImgs() {
         BufferedImage athlas = LoadSave.getSpriteAtlas();
-        this.towerImgs = new BufferedImage[4];
+        this.towerImgs = new BufferedImage[5];
         int i = 0;
         while (i < 3) {
             this.towerImgs[i] = athlas.getSubimage((4 + i) * 32, 32, 32, 32);
             ++i;
         }
-        towerImgs[3] = athlas.getSubimage(0, 3 * 32, 32, 32);
+        towerImgs[3] = athlas.getSubimage(2 * 32, 3 * 32, 32, 32);
+        towerImgs[4] = athlas.getSubimage(4 * 32, 3 * 32, 32, 32);
     }
 
     public void addTower(Tower selectedTower, int xPos, int yPos) {
@@ -67,7 +68,7 @@ public class TowerManager {
         for (Tower t : this.towers) {
             t.update();
             this.attackEnemyIfClose(t);
-            if (t.getTowerType() == 3) {
+            if (t.getTowerType() == 3 || t.getTowerType() == 4) {
                 updateTreeDrop(t);
             }
         }
@@ -76,7 +77,12 @@ public class TowerManager {
     private void updateTreeDrop(Tower t) {
 		if (t.isCooldownOver()) {
 			this.playing.drop(t);
-			actionBar.addCoins(10);
+			if (t.getTowerType() == 3) {
+				actionBar.addCoins(10);
+			} else {
+				actionBar.addLives(1);
+			}
+			t.resteCooldown();
 		}
 	}
 

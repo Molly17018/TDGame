@@ -38,7 +38,7 @@ extends Bar {
 
     private void initButtons() {
         this.bMenu = new MyButton("Menu", 2, 642, 100, 30);
-        this.towerButtons = new MyButton[4];
+        this.towerButtons = new MyButton[5];
         int w = 50;
         int h = 50;
         int xStart = 110;
@@ -368,6 +368,10 @@ extends Bar {
     public int getLives() {
         return this.lives;
     }
+    
+	public void addLives(int amount) {
+		this.lives += amount;
+	}
 
     public void resetEverything() {
         this.coins = 200;
@@ -377,5 +381,6 @@ extends Bar {
         this.selectedTower = null;
         this.displayedTower = null;
     }
+
 }
 

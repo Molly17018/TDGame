@@ -78,6 +78,7 @@ public class Constants {
         public static final int ARROW = 0;
         public static final int CHAINS = 1;
         public static final int COIN = 3;
+        public static final int HEART = 4;
 
         public static float GetSpeed(int type) {
             switch (type) {
@@ -105,7 +106,8 @@ public class Constants {
         public static final int CANNON = 0;
         public static final int ARCHER = 1;
         public static final int WIZARD = 2;
-        public static final int TREE = 3;
+        public static final int COINTREE = 3;
+        public static final int HEARTTREE = 4;
 
         public static String GetName(int towerType) {
             switch (towerType) {
@@ -119,7 +121,10 @@ public class Constants {
                     return "Wizard";
                 }
                 case 3: {
-                	return "Tree";
+                	return "Coin Tree";
+                }
+                case 4: {
+                	return "Heart Tree";
                 }
             }
             return "";
@@ -137,6 +142,9 @@ public class Constants {
                     return 150;
                 }
                 case 3: {
+                	return 300;
+                }
+                case 4: {
                 	return 300;
                 }
             }
@@ -169,9 +177,6 @@ public class Constants {
                 case 2: {
                     return 50.0f;
                 }
-                case 3: {
-                	return 10.0f;
-                }
             }
             return 0.0f;
         }
@@ -188,6 +193,9 @@ public class Constants {
                     return 42.5f;
                 }
                 case 3: {
+                	return 500.0f;
+                }
+                case 4: {
                 	return 500.0f;
                 }
             }

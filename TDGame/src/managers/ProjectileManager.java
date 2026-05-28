@@ -31,13 +31,14 @@ public class ProjectileManager {
 
 	private void importImgs() {
 		BufferedImage atlas = LoadSave.getSpriteAtlas();
-		this.projImgs = new BufferedImage[4];
+		this.projImgs = new BufferedImage[5];
 		int i = 0;
 		while (i < 3) {
 			this.projImgs[i] = atlas.getSubimage((7 + i) * 32, 32, 32, 32);
 			++i;
 		}
 		projImgs[3] = atlas.getSubimage(5 * 32, 3 * 32, 32, 32);
+		projImgs[4] = atlas.getSubimage(6 * 32, 3 * 32, 32, 32);
 		this.imporeExplosionImgs(atlas);
 	}
 
@@ -83,20 +84,25 @@ public class ProjectileManager {
 				new Projectile(t.getX() + 16, t.getY() + 16, xSpeed, ySpeed, rotate, this.projId++, type, t.getDmg()));
 	}
 
+	/**
+	 * Creates projectiles for the Tree towers.
+	 * @param t The tower which is shooting a projectile
+	 */
 	public void newProjectile(Tower t) {
 		int type = this.getProjType(t);
-		int xSpeed = 10;
-		int ySpeed = 0;
-		int rotate = 0;
+		int xSpeed = 0;
+		float ySpeed = 0.1f;
+		float rotate = 0.1f;
+		float time = 150f;
 		for (Projectile p : this.projectiles) {
 			if (p.isActive() || p.getProjectileType() != type) {
 				continue;
 			}
-			p.reuse(t.getX() + 16, t.getY() + 16, xSpeed, ySpeed, rotate, t.getDmg());
+			p.reuse(t.getX() + 16, t.getY() + 16, xSpeed, ySpeed, rotate, time);
 			return;
 		}
 		this.projectiles.add(
-				new Projectile(t.getX() + 16, t.getY() + 16, xSpeed, ySpeed, rotate, this.projId++, type, t.getDmg()));
+				new Projectile(t.getX() + 16, t.getY() + 16, xSpeed, ySpeed, rotate, this.projId++, type, time));
 	}
 
 	public void update() {
@@ -105,7 +111,7 @@ public class ProjectileManager {
 				continue;
 			}
 			p.move();
-			if (this.isProjHittingEnemy(p)) {
+			if (this.isProjHittingEnemy(p) && p.getProjectileType() != 3) {
 				p.setActive(false);
 				if (p.getProjectileType() != 2) {
 					continue;
@@ -113,6 +119,12 @@ public class ProjectileManager {
 				this.explosions.add(new Explosion(p.getPos()));
 				this.explodeOnEnemies(p);
 				continue;
+			}
+			if (p.getProjectileType() == 3 || p.getProjectileType() == 4) { //Coin / Hearts
+				p.countdownTime();
+				if (p.getTime() <= 0) {
+					p.setActive(false);
+				}
 			}
 			if (!this.isProjectilOutOfBounds(p)) {
 				continue;
@@ -157,9 +169,14 @@ public class ProjectileManager {
 		return false;
 	}
 
+	/**
+	 * Checks if a projectile is out of bounds
+	 * @param p Projectile
+	 * @return Boolean
+	 */
 	private boolean isProjectilOutOfBounds(Projectile p) {
 		return !(p.getPos().x >= 0.0f) || !(p.getPos().x <= 640.0f) || !(p.getPos().y >= 0.0f)
-				|| !(p.getPos().y <= 800.0f);
+				|| !(p.getPos().y <= 640.0f);
 	}
 
 	public void draw(Graphics g) {
@@ -204,6 +221,9 @@ public class ProjectileManager {
 		}
 		case 3: {
 			return 3;
+		}
+		case 4: {
+			return 4;
 		}
 		}
 		return 0;

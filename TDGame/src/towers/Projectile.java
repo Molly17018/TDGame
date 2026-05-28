@@ -14,6 +14,7 @@ public class Projectile {
     private float xSpeed;
     private float ySpeed;
     private float rotation;
+    private float time;
 
     public Projectile(float x, float y, float xSpeed, float ySpeed, float rotation, int id, int projectileType, int damage) {
         this.pos = new Point2D.Float(x, y);
@@ -23,6 +24,16 @@ public class Projectile {
         this.id = id;
         this.projectileType = projectileType;
         this.damage = damage;
+    }
+    
+    public Projectile(float x, float y, float xSpeed, float ySpeed, float rotation, int id, int projectileType, float time) {
+        this.pos = new Point2D.Float(x, y);
+        this.xSpeed = xSpeed;
+        this.ySpeed = ySpeed;
+        this.rotation = rotation;
+        this.id = id;
+        this.projectileType = projectileType;
+        this.time = time;
     }
 
     public void move() {
@@ -36,6 +47,15 @@ public class Projectile {
         this.ySpeed = ySpeed;
         this.rotation = rotate;
         this.damage = dmg;
+        this.active = true;
+    }
+    
+    public void reuse(int x, int y, float xSpeed, float ySpeed, float rotate, float time) {
+        this.pos = new Point2D.Float(x, y);
+        this.xSpeed = xSpeed;
+        this.ySpeed = ySpeed;
+        this.rotation = rotate;
+        this.time = time;
         this.active = true;
     }
 
@@ -57,6 +77,14 @@ public class Projectile {
 
     public float getRotation() {
         return this.rotation;
+    }
+    
+    public float getTime() {
+    	return this.time;
+    }
+    
+    public void countdownTime() {
+    	this.time--;
     }
 
     public boolean isActive() {

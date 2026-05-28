@@ -37,6 +37,10 @@ implements SceneMethods {
     private Tower selectedTower;
     private int coinsTick;
 
+    /**
+     * Constructor for the class Playing
+     * @param game Instance of the class game
+     */
     public Playing(Game game) {
         super(game);
         this.loadDefaultLevel();
@@ -47,15 +51,15 @@ implements SceneMethods {
         this.waveManager = new WaveManager(this);
     }
 
+    /**
+     * Loads the default Level from LoadSave, and sets the start and end points to spawn enemies
+     * @see helpz.LoadSave
+     */
     private void loadDefaultLevel() {
         this.lvl = LoadSave.GetLevelData();
         ArrayList<PathPoint> points = LoadSave.GetLevelPathPoints();
         this.start = points.get(0);
         this.end = points.get(1);
-    }
-
-    public void setLevel(int[][] lvl) {
-        this.lvl = lvl;
     }
 
     public void update() {
@@ -270,6 +274,10 @@ implements SceneMethods {
 
     public ActionBar getActionBar() {
         return this.actionBar;
+    }
+    
+    public void setLevel(int[][] lvl) {
+        this.lvl = lvl;
     }
 
     public void resetEverything() {
