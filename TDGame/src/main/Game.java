@@ -16,7 +16,7 @@ import scenes.Menu;
 import scenes.Playing;
 import scenes.Settings;
 
-/**
+/** 
  * Main class of this Game
  */
 public class Game
